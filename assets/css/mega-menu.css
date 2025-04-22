@@ -1,0 +1,207 @@
+.mega-menu {
+  position: relative;
+  margin-top: 24px;
+  width: 100%;
+}
+.mega-menu .top-level-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mega-menu .top-level-menu .slick-track,
+#productCategoryTabs .slick-track {
+  display: flex;
+}
+.mega-menu .menu-item {
+  margin-right: 12px;
+  min-width: max-content;
+  max-width: max-content;
+}
+#productCategoryTabs .nav-item{
+  min-width: max-content;
+  max-width: max-content;
+}
+.mega-menu .top-level-menu .slick-arrow,
+#productCategoryTabs .slick-arrow{
+  cursor: pointer;
+}
+.mega-menu .top-level-menu .slick-arrow svg,
+#productCategoryTabs .slick-arrow svg{
+  width: 28px;
+  height: 28px;
+  border: 1px solid #eee;
+  border-radius: 50%;
+  margin-top: 5px;
+  box-shadow: rgb(100 100 111 / 5%) 0px 7px 5px 0px;
+}
+.mega-menu .menu-item > a {
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  color: #4d5462;
+  padding: 8px 16px;
+  border: 1px solid #eee;
+  border-radius: 20px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+.mega-menu .mega-menu-content{
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 42px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  padding: 40px;
+  z-index: 1000;
+  border-radius: 20px;
+  max-height: 70vh;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.mega-menu-content-holder{
+  display: none;
+  position: absolute;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  padding: 40px;
+  border-radius: 20px;
+  max-height: 70vh;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+@media (min-width: 992px) {
+  .mega-menu .menu-item:hover .mega-menu-content {
+    display: flex;
+  }
+}
+.mega-menu .subcategories-wrapper {
+  flex: 2;
+  padding-right: 20px;
+}
+.mega-menu .subcategories-columns {
+  display: flex;
+  gap: 20px;
+}
+.mega-menu .subcategory-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.mega-menu .sub-category-link {
+  color: #666;
+  text-decoration: none;
+  padding: 5px 0;
+}
+.mega-menu .sub-category-link:hover {
+  color: #000;
+}
+.mega-menu .category-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mega-menu .category-image img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+
+/* Mobile Mega Menu */
+.wpboilerplate-mega-menu-mobile .mega-menu {
+  border-bottom: 1px solid #DCE4E9;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+.wpboilerplatete-mega-menu-mobile-overlay {
+  width: 100vw;
+  height: 100vh;
+  background: #030303A3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  transform: translateX(-110%);
+  transition: .3s ease-in-out;
+  overflow: hidden;
+}
+.wpboilerplatete-mega-menu-mobile {
+  position: fixed;
+  background: #fff;
+  width: 88%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  padding: 16px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.wpboilerplatete-mega-menu-mobile-overlay.show {
+  transform: translateX(0);
+}
+.wpboilerplatete-mega-menu-mobile .header {
+  padding: 16px 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 500;
+  color: #1B0832;
+  border-bottom: 1px solid #DCE4E9;
+  margin-bottom: 10px;
+}
+.wpboilerplatete-mega-menu-mobile .mega-menu .menu-item {
+  width: 100%;
+}
+.wpboilerplatete-mega-menu-mobile .mega-menu .menu-item > a {
+  border: 0;
+  padding: 8px 0;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.wpboilerplatete-mega-menu-mobile .mega-menu .mega-menu-content {
+  padding: 0px;
+  position: static;
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+}
+.wpboilerplatete-mega-menu-mobile .mega-menu .sub-category-link {
+  display: block;
+}
+.wpboilerplatete-mega-menu-mobile .mega-menu .top-level-menu {
+  overflow-x: unset;
+}
+.wpboilerplatete-mega-menu-mobile .mega-menu .mega-menu-content{
+  display: none;
+}
+.wpboilerplatete-mega-menu-mobile .menu-item.show .mega-menu-content{
+  display: block;
+}
+.wpboilerplatete-mega-menu-mobile .mega-menu .menu-item.show > a {
+  font-weight: 500;
+  color: #1B0832;
+}
+.wpboilerplatete-mega-menu-mobile .mega-menu .menu-item.show > a {
+  font-weight: 500;
+  color: #1B0832;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 5px;
+}
+.wpboilerplatete-mega-menu-mobile .mega-menu .menu-item.show > a svg{
+  transform: rotate(90deg);
+}
