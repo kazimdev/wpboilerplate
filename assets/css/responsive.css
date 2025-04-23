@@ -9,6 +9,7 @@
     max-width: 1360px;
   }
 }
+
 @media (min-width: 992px) {
   .hide-on-desktop {
     display: none;

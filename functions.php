@@ -135,7 +135,9 @@ function save_delivery_time_field($post_id)
 //Add to Cart
 function get_wishlist_count_ajax()
 {
-	wp_send_json(['count' => yith_wcwl_count_products()]);
+	if (is_plugin_active('yith-woocommerce-wishlist/init.php')) {
+		wp_send_json(['count' => yith_wcwl_count_products()]);
+	}
 }
 add_action('wp_ajax_get_wishlist_count', 'get_wishlist_count_ajax');
 add_action('wp_ajax_nopriv_get_wishlist_count', 'get_wishlist_count_ajax');
@@ -170,7 +172,9 @@ add_action('wp_ajax_nopriv_custom_ajax_add_to_cart', 'custom_ajax_add_to_cart');
 
 function get_cart_count_ajax()
 {
-	wp_send_json(['count' => WC()->cart->get_cart_contents_count()]);
+	if (is_plugin_active('woocommerce/woocommerce.php')) {
+		wp_send_json(['count' => WC()->cart->get_cart_contents_count()]);
+	}
 }
 add_action('wp_ajax_get_cart_count', 'get_cart_count_ajax');
 add_action('wp_ajax_nopriv_get_cart_count', 'get_cart_count_ajax');

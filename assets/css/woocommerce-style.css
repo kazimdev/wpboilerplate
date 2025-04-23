@@ -2,6 +2,136 @@
 * WooCommerce Styles
 */
 
+.product-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 250px));
+  grid-gap: 24px;
+}
+
+.wpboilerplate-product-cat.list .product-card .add-to-cart-button {
+  width: 136px;
+  margin-right: 0;
+}
+
+.product-category-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 24px;
+}
+
+.product-category-item {
+  padding: 16px;
+  background-color: #f6f8f9;
+  border-radius: 16px;
+
+  .content {
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 25px 12px;
+    text-align: center;
+
+    .title {
+      font-size: 18px;
+      line-height: 26px;
+      color: #1b0832;
+      font-weight: 600;
+    }
+  }
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.product-card {
+  border: 1px solid #dce4e9;
+  border-radius: 8px;
+  overflow: hidden;
+  .product-info {
+    padding: 16px;
+  }
+
+  .product-image {
+    position: relative;
+    max-height: 245px;
+    overflow: hidden;
+    object-fit: contain;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .stock-status {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: #dcfce8;
+    color: #16a34a;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 50px;
+    border: 1px solid #86efad;
+  }
+
+  .stock-status.out-of-stock {
+    background: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+  }
+
+  .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    max-width: 140px;
+}
+
+  .product-info {
+    margin-top: 16px;
+  }
+
+  .product-title {
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .product-price {
+    margin-bottom: 16px;
+  }
+
+  .sale-price {
+    color: #1b0832;
+    font-weight: bold;
+    font-size: 20px;
+    margin-right: 8px;
+  }
+
+  .add-to-cart-button {
+    display: block;
+    background-color: #fff;
+    color: #884df8;
+    width: 100%;
+    border: 1px solid #884df8;
+    padding: 8px 16px;
+    border-radius: 100px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    max-width: 210px;
+    margin: 0 auto;
+}
+  .add-to-cart-button:hover {
+    background-color: #884df8;
+    color: #fff;
+  }
+}
+
 /* 
 * Producct Search / Luigis Box
 */

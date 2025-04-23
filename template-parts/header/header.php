@@ -34,13 +34,13 @@ $vat_checked = (isset($_COOKIE['exclude_tax']) && $_COOKIE['exclude_tax'] == 'ye
 
         <div id="wpboilerplate_main_menu">
             <?php
-            // 			wp_nav_menu( array(
-            // 				'theme_location' => 'main-menu',
-            // 				'menu_class'     => 'navbar-nav',
-            // 				'container'      => 'div',
-            // //            'container_class' => 'collapse navbar-collapse',
-            // //            'container_id' => 'wpboilerplate_main_menu',
-            // 			) );
+            wp_nav_menu(array(
+                'theme_location' => 'main-menu',
+                'menu_class'     => 'navbar-nav',
+                'container'      => 'div',
+                'container_class' => 'collapse navbar-collapse',
+                'container_id' => 'wpboilerplate_main_menu',
+            ));
             ?>
 
             <?php if (!wp_is_mobile()) { ?>
@@ -170,14 +170,7 @@ $vat_checked = (isset($_COOKIE['exclude_tax']) && $_COOKIE['exclude_tax'] == 'ye
 
 <?php if (wp_is_mobile()) { ?>
     <form class="wpboilerplate-search-box hide-on-desktop" id="wpboilerplate-product-search">
-        <input type="text" name="product_search" id="product_search" placeholder="Search..." onfocus="WPBoilerplateLBInitSearch()" onkeyup="WPBoilerplateLBInitSearch()">
+        <input type="text" name="product_search" id="product_search" placeholder="Search..." />
         <span><?php echo $search_icon; ?></span>
     </form>
 <?php } ?>
-
-<div class="search-ui-wrapper">
-    <div id="search-ui"></div>
-    <span class="close"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M11 1L1 11M1 1L11 11" stroke="#2D3139" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-        </svg></span>
-</div>
