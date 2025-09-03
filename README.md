@@ -1,2 +1,2 @@
 # wpboilerplate
-WPBoilerplate Boxing WordPress Theme
+WPBoilerplate WordPress Theme

@@ -41,7 +41,7 @@ if (!class_exists('WPBoilerplate_Init')) {
             /**
              * enqueue an editor stylesheet for the gutenbarg.
              */
-            add_action('enqueue_block_editor_assets', array($this, 'gutenbarg_script'));
+            add_action('enqueue_block_editor_assets', array($this, 'load_gutenberg_script'));
         }
 
         /**
@@ -148,33 +148,13 @@ if (!class_exists('WPBoilerplate_Init')) {
          */
         public function theme_widgets_init()
         {
-            register_sidebar(array(
-                'name' => esc_html__('Sidebar', 'wpboilerplate'),
-                'id' => 'sidebar-1',
-                'description' => esc_html__('Add widgets here.', 'wpboilerplate'),
-                'before_widget' => '<div id="%1$s" class="widget %2$s">',
-                'after_widget' => '</div>',
-                'before_title' => '<h4 class="widget-headline style-01">',
-                'after_title' => '</h4>',
-            ));
-            register_sidebar(array(
-                'name' => esc_html__('Products Sidebar', 'wpboilerplate'),
-                'id' => 'product-sidebar',
-                'description' => esc_html__('Add widgets here.', 'wpboilerplate'),
-                'before_widget' => '<div id="%1$s" class="widget %2$s">',
-                'after_widget' => '</div>',
-                'before_title' => '<h4 class="widget-headline style-01">',
-                'after_title' => '</h4>',
-            ));
-            register_sidebar(array(
-                'name' => esc_html__('Footer Widget Area', 'wpboilerplate'),
-                'id' => 'footer-widget',
-                'description' => esc_html__('Add widgets here.', 'wpboilerplate'),
-                'before_widget' => '<div class="col-lg-3 col-md-6"><div id="%1$s" class="widget footer-widget %2$s">',
-                'after_widget' => '</div></div>',
-                'before_title' => '<h4 class="widget-headline">',
-                'after_title' => '</h4>',
-            ));
+            $sidebars = require_once WPBOILERPLATE_THEME_ROOT . '/config/sidebars.php';
+
+            if (!empty($sidebars)) {
+                foreach ($sidebars as $key => $sidebar) {
+                    register_sidebar($sidebar);
+                }
+            }
         }
 
         /**
@@ -264,80 +244,17 @@ if (!class_exists('WPBoilerplate_Init')) {
             if (!empty($enqueue_google_fonts)) {
                 wp_enqueue_style('wpboilerplate-google-fonts', esc_url(add_query_arg('family', urlencode(implode('|', $enqueue_google_fonts)), '//fonts.googleapis.com/css')), array(), null);
             }
-            $all_css_files = array(
-                array(
-                    'handle' => 'animate',
-                    'src' => WPBOILERPLATE_CSS . '/animate.css',
-                    'deps' => array(),
-                    'ver' => $theme_version,
-                    'media' => 'all',
-                ),
-                array(
-                    'handle' => 'bootstrap',
-                    'src' => WPBOILERPLATE_CSS . '/bootstrap.min.css',
-                    'deps' => array(),
-                    'ver' => $theme_version,
-                    'media' => 'all',
-                ),
-                array(
-                    'handle' => 'jquery-ui',
-                    'src' => '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css',
-                    'deps' => array('bootstrap'),
-                    'ver' => $theme_version,
-                    'media' => 'all',
-                ),
-                array(
-                    'handle' => 'magnific-popup',
-                    'src' => WPBOILERPLATE_CSS . '/magnific-popup.css',
-                    'deps' => array(),
-                    'ver' => $theme_version,
-                    'media' => 'all',
-                ),
-                array(
-                    'handle' => 'wpboilerplate-main-style',
-                    'src' => WPBOILERPLATE_CSS . '/main-style' . $css_ext,
-                    'deps' => array(),
-                    'ver' => $theme_version,
-                    'media' => 'all',
-                ),
-                array(
-                    'handle' => 'wpboilerplate-mega-menu-style',
-                    'src' => WPBOILERPLATE_CSS . '/mega-menu' . $css_ext,
-                    'deps' => array(),
-                    'ver' => $theme_version,
-                    'media' => 'all',
-                ),
-                array(
-                    'handle' => 'wpboilerplate-responsive',
-                    'src' => WPBOILERPLATE_CSS . '/responsive' . $css_ext,
-                    'deps' => array(),
-                    'ver' => $theme_version,
-                    'media' => 'all',
-                ),
-            );
 
-            if (class_exists('WooCommerce')) {
-                $all_css_files[] = array(
-                    'handle' => 'wpboilerplate-woocommerce-style',
-                    'src' => WPBOILERPLATE_CSS . '/woocommerce-style' . $css_ext,
-                    'deps' => array(),
-                    'ver' => $theme_version,
-                    'media' => 'all',
-                );
+            $css_files = require_once WPBOILERPLATE_THEME_ROOT . '/config/files-css.php';
 
-                $all_css_files[] = array(
-                    'handle' => 'wpboilerplate-woocommerce-responsive',
-                    'src' => WPBOILERPLATE_CSS . '/woocommerce-responsive' . $css_ext,
-                    'deps' => array(),
-                    'ver' => $theme_version,
-                    'media' => 'all',
-                );
-            }
+            $css_files = apply_filters('wpboilerplate_theme_enqueue_style', $css_files);
 
-            $all_css_files = apply_filters('wpboilerplate_theme_enqueue_style', $all_css_files);
+            if (is_array($css_files) && !empty($css_files)) {
+                foreach ($css_files as $css) {
+                    
+                    $css['ver'] = $theme_version;
+                    $css['media'] = 'all';
 
-            if (is_array($all_css_files) && !empty($all_css_files)) {
-                foreach ($all_css_files as $css) {
                     call_user_func_array('wp_enqueue_style', $css);
                 }
             }
@@ -362,70 +279,18 @@ if (!class_exists('WPBoilerplate_Init')) {
         {
             $theme_version = wpboilerplate()->get_theme_info('version');
             $js_ext = WPBOILERPLATE_DEV ? '.js' : '.min.js';
-            $all_js_files = array(
-                array(
-                    'handle' => 'bootstrap',
-                    'src' => WPBOILERPLATE_JS . '/bootstrap.min.js',
-                    'deps' => array('jquery'),
-                    'ver' => $theme_version,
-                    'in_footer' => true // This ensures the script is loaded in the footer
-                ),
-                array(
-                    'handle' => 'preloader',
-                    'src' => WPBOILERPLATE_JS . '/preloader.js',
-                    'deps' => array('jquery'),
-                    'ver' => $theme_version,
-                    'in_footer' => true
-                ),
-                array(
-                    'handle' => 'magnific-popup',
-                    'src' => WPBOILERPLATE_JS . '/jquery.magnific-popup.js',
-                    'deps' => array('jquery'),
-                    'ver' => $theme_version,
-                    'in_footer' => true
-                ),
-                array(
-                    'handle' => 'wpboilerplate-main-script',
-                    'src' => WPBOILERPLATE_JS . '/main' . $js_ext,
-                    'deps' => array('jquery'),
-                    'ver' => $theme_version,
-                    'in_footer' => true
-                ),
-                array(
-                    'handle' => 'wpboilerplate-jquery-ui',
-                    'src' => '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js',
-                    'deps' => array('jquery'),
-                    'ver' => $theme_version,
-                    'in_footer' => true
-                ),
-            );
 
-            if (class_exists('WooCommerce')) {
-                $all_js_files[] = array(
-                    'handle' => 'wpboilerplate-woocommerce',
-                    'src' => WPBOILERPLATE_JS . '/woocommerce' . $js_ext,
-                    'deps' => array('jquery'),
-                    'ver' => $theme_version,
-                    'in_footer' => true
-                );
-                $all_js_files[] = array(
-                    'handle' => 'wpboilerplate-product-filter',
-                    'src' => WPBOILERPLATE_JS . '/product-filter' . $js_ext,
-                    'deps' => array('jquery'),
-                    'ver' => $theme_version,
-                    'in_footer' => true
-                );
-            }
+            $js_files = require_once WPBOILERPLATE_THEME_ROOT . '/config/files-js.php';
 
-            $all_js_files = apply_filters('wpboilerplate_theme_enqueue_script', $all_js_files);
+            $js_files = apply_filters('wpboilerplate_theme_enqueue_script', $js_files);
 
-            if (is_array($all_js_files) && !empty($all_js_files)) {
-                foreach ($all_js_files as $js) {
+            if (is_array($js_files) && !empty($js_files)) {
+                foreach ($js_files as $js) {
                     wp_enqueue_script(
                         $js['handle'],
                         $js['src'],
                         $js['deps'],
-                        $js['ver'],
+                        $theme_version,
                         $js['in_footer'] // Ensure this is passed to load the script in the footer
                     );
                 }
@@ -443,99 +308,7 @@ if (!class_exists('WPBoilerplate_Init')) {
          */
         public function load_theme_dependency_files()
         {
-            $includes_files = array(
-                array(
-                    'file-name' => 'activation',
-                    'file-path' => WPBOILERPLATE_TGMA
-                ),
-                array(
-                    'file-name' => 'singletone',
-                    'file-path' => WPBOILERPLATE_INC .  '/traits/'
-                ),
-                array(
-                    'file-name' => 'functions',
-                    'file-path' => WPBOILERPLATE_INC .  '/traits/'
-                ),
-                array(
-                    'file-name' => 'theme-breadcrumb',
-                    'file-path' => WPBOILERPLATE_INC
-                ),
-                array(
-                    'file-name' => 'theme-excerpt',
-                    'file-path' => WPBOILERPLATE_INC
-                ),
-                array(
-                    'file-name' => 'theme-hook-customize',
-                    'file-path' => WPBOILERPLATE_INC
-                ),
-                array(
-                    'file-name' => 'theme-comments-modifications',
-                    'file-path' => WPBOILERPLATE_INC
-                ),
-                array(
-                    'file-name' => 'customizer',
-                    'file-path' => WPBOILERPLATE_INC
-                ),
-                array(
-                    'file-name' => 'theme-group-fields-cs',
-                    'file-path' => WPBOILERPLATE_THEME_SETTINGS
-                ),
-                array(
-                    'file-name' => 'theme-group-fields-value-cs',
-                    'file-path' => WPBOILERPLATE_THEME_SETTINGS
-                ),
-                array(
-                    'file-name' => 'theme-metabox-cs',
-                    'file-path' => WPBOILERPLATE_THEME_SETTINGS
-                ),
-                array(
-                    'file-name' => 'theme-userprofile-cs',
-                    'file-path' => WPBOILERPLATE_THEME_SETTINGS
-                ),
-                array(
-                    'file-name' => 'theme-shortcode-option-cs',
-                    'file-path' => WPBOILERPLATE_THEME_SETTINGS
-                ),
-                array(
-                    'file-name' => 'theme-customizer-cs',
-                    'file-path' => WPBOILERPLATE_THEME_SETTINGS
-                ),
-                array(
-                    'file-name' => 'theme-option-cs',
-                    'file-path' => WPBOILERPLATE_THEME_SETTINGS
-                ),
-            );
-
-            if (class_exists('WooCommerce')) {
-                $includes_files[] = array(
-                    'file-name' => 'theme-woocommerce-customize',
-                    'file-path' => WPBOILERPLATE_INC
-                );
-                $includes_files[] = array(
-                    'file-name' => 'product-loop',
-                    'file-path' => WPBOILERPLATE_INC . '/woo-features/'
-                );
-                $includes_files[] = array(
-                    'file-name' => 'woo-features',
-                    'file-path' => WPBOILERPLATE_INC . '/woo-features/'
-                );
-                $includes_files[] = array(
-                    'file-name' => 'shipping-methods',
-                    'file-path' => WPBOILERPLATE_INC . '/woo-features/'
-                );
-                $includes_files[] = array(
-                    'file-name' => 'luigis-box',
-                    'file-path' => WPBOILERPLATE_INC . '/woo-features/shortcodes/'
-                );
-                $includes_files[] = array(
-                    'file-name' => 'generate-filters',
-                    'file-path' => WPBOILERPLATE_INC . '/woo-features/product-filters/'
-                );
-                $includes_files[] = array(
-                    'file-name' => 'ajax-filter',
-                    'file-path' => WPBOILERPLATE_INC . '/woo-features/product-filters/'
-                );
-            }
+            $includes_files = require_once WPBOILERPLATE_THEME_ROOT . '/config/files-php.php';
 
             if (is_array($includes_files) && !empty($includes_files)) {
                 foreach ($includes_files as $file) {
@@ -559,18 +332,19 @@ if (!class_exists('WPBoilerplate_Init')) {
          * Add gutenberg editor script
          * @hook enqueue_block_editor_assets
          */
-        public function gutenbarg_script()
+        public function load_gutenberg_script()
         {
-
             $theme_version = WPBOILERPLATE_DEV ? time() : wpboilerplate()->get_theme_info('version');
             $css_ext = '.css';
+
             //load google fonts
             $enqueue_google_fonts = self::load_google_fonts();
             if (!empty($enqueue_google_fonts)) {
                 wp_enqueue_style('wpboilerplate-google-fonts', esc_url(add_query_arg('family', urlencode(implode('|', $enqueue_google_fonts)), '//fonts.googleapis.com/css')), array(), null);
             }
+
             wp_enqueue_style('flaticon', WPBOILERPLATE_CSS . '/flaticon.css', [], $theme_version, 'all');
-            wp_enqueue_style('flynext-gutenbarg', WPBOILERPLATE_CSS . '/gutenbarg.css', [], $theme_version, 'all');
+            wp_enqueue_style('flynext-gutenbarg', WPBOILERPLATE_CSS . '/gutenberg.css', [], $theme_version, 'all');
         }
     } //end class
 

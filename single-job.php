@@ -54,72 +54,7 @@
                 <main id="main" class="site-main">
                     <div class="container custom-container">
                         <div class="row">
-                            <div class="col-lg-12">
-                                <?php
-                                $linkText = $is_arabic ? 'العودة إلى العمل والعمل التطوعي' : 'Back to Career & Volunteering';
-                                $linkHref = $is_arabic ? '/ar-job' : '/job';
-                                ?>
-
-                                <div class="post-menu-item-list">
-                                    <a href="<?php echo $linkHref; ?>">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none">
-                                            <g clip-path="url(#clip0_1292_31926)">
-                                                <path d="M5 12H19" stroke="#0F0E0E" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round" />
-                                                <path d="M5 12L11 18" stroke="#0F0E0E" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M5 12L11 6" stroke="#0F0E0E" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round" />
-                                            </g>
-                                            <defs>
-                                                <clipPath id="clip0_1292_31926">
-                                                    <rect width="24" height="24" fill="white" />
-                                                </clipPath>
-                                            </defs>
-                                        </svg>
-                                        <?php echo $linkText; ?>
-                                    </a>
-                                </div>
-
-                                <div class="job-content-wrap">
-                                    <?php
-                                    if (has_post_thumbnail() && get_post_type() == 'ar_post') {
-                                    ?>
-                                        <div class="thumbnail">
-                                            <?php wpboilerplate()->post_thumbnail('post-thumbnail'); ?>
-                                        </div>
-                                    <?php } ?>
-                                    <?php while (have_posts()) :
-                                        the_post();
-                                        get_template_part('template-parts/content', 'job-single');
-                                    endwhile; // End of the loop.
-                                    ?>
-                                    <div class="apply-sidebar-content">
-                                        <div class="job-type">
-                                            <?php echo ($is_arabic ? 'نوع الوظيفة' : 'Job type'); ?>
-                                        </div>
-                                        <div class="job-type-title"><?php echo esc_html__($job_type, 'wpboilerplate') ?></div>
-                                        <div class="job-type">
-                                            <?php echo ($is_arabic ? 'الموقع' : 'Location'); ?>
-                                        </div>
-                                        <div class="job-type-title"><?php echo esc_html__($job_location, 'wpboilerplate') ?></div>
-                                        <div class="job-type">
-                                            <?php echo ($is_arabic ? 'فئة الوظيفة' : 'Job category'); ?>
-                                        </div>
-                                        <div class="job-type-title"><?php
-                                                                    foreach ($cats as $cat) {
-                                                                        echo $cat->name;
-                                                                    } ?></div>
-
-                                        <div class="btn-wrap">
-                                            <a href="<?php echo esc_url($job_apply_btn_url) ?>"
-                                                class="boxed-btn">
-                                                <?php echo ($is_arabic ? 'قدم الآن' : 'Apply Now'); ?></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- Your Code -->
                         </div>
                     </div>
                 </main><!-- #main -->
