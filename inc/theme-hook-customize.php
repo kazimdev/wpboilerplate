@@ -24,16 +24,19 @@ if (!class_exists('WPBoilerplate_Customize')) {
         {
             //excerpt more
             add_action('excerpt_more', array($this, 'excerpt_more'));
+
             //preloader
             add_action('wpboilerplate_after_body', array($this, 'preloader'));
-            //search popup
-            add_action('wpboilerplate_after_body', array($this, 'search_popup'));
+
             //breadcrumb
             add_action('wpboilerplate_before_page_content', array($this, 'breadcrumb'));
+
             //back top
             add_action('wpboilerplate_after_body', array($this, 'back_top'));
+
             //order comment form
             add_filter('comment_form_fields', array($this, 'comment_fields_reorder'));
+
             // contact form 7
             add_filter('wpcf7_autop_or_not', '__return_false');
         }
@@ -155,7 +158,7 @@ if (!class_exists('WPBoilerplate_Customize')) {
             <div class="back-to-top">
                 <span class="back-top">🡩</span>
             </div>
-        <?php
+<?php
         }
 
         /**
@@ -176,27 +179,8 @@ if (!class_exists('WPBoilerplate_Customize')) {
 
             return $fileds;
         }
-
-        /**
-         * @since 1.0.0
-         * Search Popup
-         */
-        public function search_popup()
-        {
-        ?>
-            <div class="body-overlay" id="body-overlay"></div>
-            <div class="search-popup" id="search-popup">
-                <form action="<?php echo esc_url(home_url('/')) ?>" class="search-form">
-                    <div class="form-group">
-                        <input type="text" name="s" class="form-control"
-                            placeholder="<?php echo esc_attr__('Search....', 'wpboilerplate'); ?>">
-                    </div>
-                    <button class="close-btn border-none"><i class="fas fa-search"></i></button>
-                </form>
-            </div>
-<?php
-        }
     } //end class
+
     if (class_exists('WPBoilerplate_Customize')) {
         WPBoilerplate_Customize::getInstance();
     }

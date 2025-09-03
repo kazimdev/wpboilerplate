@@ -20,9 +20,11 @@
 </head>
 
 <body <?php body_class(); ?>>
-    <?php wp_body_open(); ?>
-    <?php
+    <?php 
+    wp_body_open(); 
+
     do_action('wpboilerplate_after_body');
+    
     $page_container_meta = WPBoilerplate_Group_Fields_Value::page_container('wpboilerplate', 'header_options');
     ?>
 

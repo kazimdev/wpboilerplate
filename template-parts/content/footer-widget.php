@@ -5,7 +5,8 @@
  * @package wpboilerplate
  * @since 1.0.0
  */
-$copyright_text = !empty(cs_get_option('copyright_text')) ? cs_get_option('copyright_text') : esc_html__('© 2023 wpboilerplate | All right reserved ', 'wpboilerplate') . '<a href="' . esc_url('https://themeforest.net/user/themeim/portfolio') . '">' . esc_html__('Themeim', 'wpboilerplate') . '</a>';
+$copyright_text = !empty(cs_get_option('copyright_text')) ? cs_get_option('copyright_text') : esc_html__('© 2025 wpboilerplate | All right reserved ', 'wpboilerplate') . '<a href="' . esc_url('https://musemind.agency') . '">' . esc_html__('Musemind', 'wpboilerplate') . '</a>';
+
 $copyright_text = str_replace('{copy}', '&copy;', $copyright_text);
 $copyright_text = str_replace('{year}', date('Y'), $copyright_text);
 $socialIcon = cs_get_option('footer_social_repeater');
